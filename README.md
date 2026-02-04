@@ -116,6 +116,8 @@ AllowedIPs = 0.0.0.0/0
 
 ### **Core Reliability Tips**
 
-* **Persistent Keepalive:** Keep this at 10 seconds to ensure the NAT hole stays open and to support fast roaming.
+* **Persistent Keepalive:** Keep this at 10 seconds to ensure the NAT hole stays open and to support fast roaming. Ensure the keepalive interval is set on the client for both the signaling/public server as the remote device.
 * **Symmetric NAT:** This setup may fail on Symmetric NAT (common in some corporate networks). Always keep the **Proxied Fallback** config ready.
 * **Security:** The API only listens on the internal WireGuard IP and requires a token. All data traffic remains end-to-end encrypted by WireGuard.
+* **Unique ListenPort per client** hardcode a unique listen port per client config so that all compliant wireguard clients use the same source port for both signaling and P2P. if the listen port is not unique per client then nat port collision resolution may break the p2p if e.g 2 clients are on the same wi-fi network.
+* **Open as much as possible firewall for wireguard port** Ensure the wireguard port is open on as many firewalls you control for the remote device (e.g port forward). This ensures the python script is effectively only punching through a firewall you don't control like an ISP CG-NAT like cellular, increasing likelihood of success. If you have a firewall or device performing source port randomization then disable it as it breaks P2P.
