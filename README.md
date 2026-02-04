@@ -1,4 +1,4 @@
-# WireGuardP2P — Seamless Peer-to-Peer WireGuard Connections Behind NAT
+# WireGuardP2P — Simple Seamless Peer-to-Peer WireGuard Connections Behind NAT
 
 
 Setting up a WireGuard VPN can be a headache when your devices are behind NATs or firewalls that block incoming connections — a common scenario with networks you don’t control, such as those using CG-NAT (typical for many mobile or ISP setups).
@@ -18,7 +18,7 @@ In an ideal world where the client has a static IP you can establish a simple di
 
 1. **Public Server:** Acts as a bootstrap/relay and records the public IP/port of connecting clients.
 2. **Remote Device:** Polls the public server for client endpoints and updates its own WireGuard configuration to "punch" a hole back to the client.
-3. **Client:** Connects to both the public server (for signaling) and the remote device (for P2P).
+3. **Client:** Connects to both the public server (for signaling) and the remote device (for P2P) using the official wireguard client without any helper scripts or client modification.
 
 ---
 
@@ -112,6 +112,7 @@ AllowedIPs = 0.0.0.0/0
 1. **Generate a Token:** Create a shared secret in `/etc/wg-publisher/token.txt` and `/etc/wg-subscriber/token.txt`.
 2. **Public Server:** Run `server_wg_publisher.py`. It serves a small API over the WireGuard interface to share client endpoints.
 3. **Remote Device:** Run `device_wg_subscriber.py`. It polls the server API and updates the local WireGuard peer endpoints dynamically.
+4. **Client** No python script is needed on the client. You only need the official wireguard client. Its confirmed that the P2P works with the official client of Mac, Windows, Linux and Android.
 
 ### **Core Reliability Tips**
 
